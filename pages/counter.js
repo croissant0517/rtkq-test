@@ -1,10 +1,10 @@
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector, useDispatch } from "react-redux";
 
-import { decrement, increment } from '../slices/counterSlice'
+import { decrement, increment } from "../slices/counterSlice";
 
 export default function Counter() {
-  const {value} = useSelector((state) => state.counter)
-  const dispatch = useDispatch()
+  const { value } = useSelector((state) => state.counter);
+  const dispatch = useDispatch();
 
   return (
     <div>
@@ -24,5 +24,5 @@ export default function Counter() {
         </button>
       </div>
     </div>
-  )
+  );
 }

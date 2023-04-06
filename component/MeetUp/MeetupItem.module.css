@@ -1,0 +1,10 @@
+.meetupItemWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.meetupItemWrapper h3 {
+  text-align: center;
+}

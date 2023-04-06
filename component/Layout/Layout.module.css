@@ -1,0 +1,22 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 50px;
+  min-width: 100vw;
+  background-color: aliceblue;
+  color: black;
+  padding: 0 10px;
+}
+
+.icon {
+  cursor: pointer;
+}
