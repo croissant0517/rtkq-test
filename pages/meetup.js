@@ -27,9 +27,7 @@ export default function Meetup() {
     setOpenModal(true);
   };
 
-  const handleModalOk = () => {
-    setOpenModal(false);
-  };
+  const handleModalOk = () => {};
 
   const handleModalCancel = () => {
     setOpenModal(false);
@@ -50,7 +48,7 @@ export default function Meetup() {
         onCancel={handleModalCancel}
         closeOnEsc={true}
       >
-        <MeetupForm />
+        <MeetupForm handleSubmit={handleModalOk} />
       </Modal>
     </React.Fragment>
   );
