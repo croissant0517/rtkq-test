@@ -27,10 +27,20 @@ export default function Meetup() {
     setOpenModal(true);
   };
 
-  const handleModalOk = () => {};
-
   const handleModalCancel = () => {
     setOpenModal(false);
+  };
+
+  const addMeetup = async (meetupData) => {
+    const response = await fetch("/api/new-meetup", {
+      method: "POST",
+      body: JSON.stringify(meetupData),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    const data = await response.json();
   };
 
   useEffect(() => {
@@ -44,11 +54,12 @@ export default function Meetup() {
       <Modal
         title="Add New Meetup"
         visible={openModal}
-        onOk={handleModalOk}
-        onCancel={handleModalCancel}
+        okText="Cancel"
+        onOk={handleModalCancel}
+        hasCancel={false}
         closeOnEsc={true}
       >
-        <MeetupForm handleSubmit={handleModalOk} />
+        <MeetupForm addMeetup={addMeetup} />
       </Modal>
     </React.Fragment>
   );

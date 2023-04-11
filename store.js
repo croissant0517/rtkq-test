@@ -20,12 +20,7 @@ export const store = configureStore({
     modal: modalSlice,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({
-      serializableCheck: {
-        // Ignore these action types
-        ignoredActions: ["modal/addModal", "modal/deleModal"],
-      },
-    }).concat(middlewares),
+    getDefaultMiddleware().concat(middlewares),
 });
 
 setupListeners(store.dispatch);

@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
-import { useRouter } from "next/router";
-import useModal from "@douyinfe/semi-ui/lib/es/modal/useModal";
+import SingletonRouter, { useRouter } from "next/router";
 import { Layout } from "@douyinfe/semi-ui";
 import { IconBell, IconChevronLeft } from "@douyinfe/semi-icons";
 
@@ -10,19 +9,9 @@ export default function AppLayout({ children }) {
   const router = useRouter();
   const { Header, Footer, Content } = Layout;
 
-  const handleHistoryBack = (e) => {
-    history.go(1);
-    console.log("Go");
-  };
-
   const handleGoBack = (e) => {
     router.back();
   };
-
-  useEffect(() => {
-    window.addEventListener("popstate", handleHistoryBack);
-    return () => window.removeEventListener("popstate", handleHistoryBack);
-  });
 
   return (
     <Layout className={styles.main}>

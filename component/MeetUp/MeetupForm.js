@@ -1,18 +1,52 @@
-import { Form, useFormApi } from "@douyinfe/semi-ui";
+import { Form, useFormApi, Button } from "@douyinfe/semi-ui";
 
-export default function MeetupForm({ handleSubmit }) {
+let message = "该项为必填项";
+
+export default function MeetupForm({ addMeetup }) {
   const formApi = useFormApi();
+
+  const ComponentUsingFormApi = () => {
+    const formApi = useFormApi();
+
+    const change = () => {
+      formApi
+        .validate()
+        .then((value) => {
+          console.log(value);
+          addMeetup(value);
+        })
+        .catch((errors) => {
+          console.log(errors);
+        });
+    };
+    return <Button onClick={change}>送出</Button>;
+  };
 
   return (
     <div>
-      <Form
-        layout="vertical"
-        onValueChange={(values) => console.log(values)}
-        onSubmit={() => handleSubmit(formApi)}
-      >
-        <Form.Input field="title" label="Title" style={{ width: "100%" }} />
-        <Form.Input field="address" label="Address" style={{ width: "100%" }} />
-        <Form.Input field="image" label="Image" style={{ width: "100%" }} />
+      <Form layout="vertical" onValueChange={(values) => console.log(values)}>
+        <Form.Input
+          field="title"
+          label="Title"
+          trigger="blur"
+          rules={[{ required: true, message }]}
+          style={{ width: "100%" }}
+        />
+        <Form.Input
+          field="address"
+          label="Address"
+          trigger="blur"
+          rules={[{ required: true, message }]}
+          style={{ width: "100%" }}
+        />
+        <Form.Input
+          field="image"
+          label="Image"
+          trigger="blur"
+          rules={[{ required: true, message }]}
+          style={{ width: "100%" }}
+        />
+        <ComponentUsingFormApi />
       </Form>
     </div>
   );
