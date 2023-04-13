@@ -4,6 +4,8 @@ import { Modal, Button } from "@douyinfe/semi-ui";
 import MeetupList from "@/component/MeetUp/MeetupList";
 import MeetupForm from "@/component/MeetUp/MeetupForm";
 
+import { useAddMeetupMutation } from "@/service/meetupApi";
+
 const FakeData = [
   {
     image:
@@ -22,6 +24,7 @@ const FakeData = [
 export default function Meetup() {
   const [openModal, setOpenModal] = useState(false);
   const [meetups, setMeetups] = useState([]);
+  const [addMeetup, { isLoading, error }] = useAddMeetupMutation();
 
   const handleOpenModal = () => {
     setOpenModal(true);
@@ -31,16 +34,19 @@ export default function Meetup() {
     setOpenModal(false);
   };
 
-  const addMeetup = async (meetupData) => {
-    const response = await fetch("/api/new-meetup", {
-      method: "POST",
-      body: JSON.stringify(meetupData),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+  const handleAddMeetup = async (meetupData) => {
+    const { data } = await addMeetup(JSON.stringify(meetupData));
+    // const response = await fetch("/api/new-meetup", {
+    //   method: "POST",
+    //   body: JSON.stringify(meetupData),
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    // });
 
-    const data = await response.json();
+    // const data = await response.json();
+
+    console.log(data, "data!!");
   };
 
   useEffect(() => {
@@ -57,9 +63,11 @@ export default function Meetup() {
         okText="Cancel"
         onOk={handleModalCancel}
         hasCancel={false}
+        onCancel={handleModalCancel}
         closeOnEsc={true}
+        confirmLoading={isLoading}
       >
-        <MeetupForm addMeetup={addMeetup} />
+        <MeetupForm addMeetup={handleAddMeetup} />
       </Modal>
     </React.Fragment>
   );

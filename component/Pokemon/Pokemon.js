@@ -5,6 +5,8 @@ import { useGetPokemonByNameQuery } from "@/service/pokemon";
 
 export default function Pokemon() {
   const { data, error, isLoading } = useGetPokemonByNameQuery("pikachu");
+  const datas = useGetPokemonByNameQuery("pikachu");
+  console.log(datas);
 
   return (
     <div className="App">

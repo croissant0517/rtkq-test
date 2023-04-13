@@ -1,17 +1,22 @@
-const { MongoClient } = require("mongodb");
+const { MongoClient, ServerApiVersion } = require("mongodb");
 
-const url =
-  "mongodb+srv://vic0517:Vic60627@@clustername.mongodb.net/test?retryWrites=true&w=majority&useNewUrlParser=true&useUnifiedTopology=true";
+import connect from "../../utils/mongodb";
+
+const password = encodeURIComponent("Vic60627@");
+
+const uri = `mongodb+srv://vic0517:${password}@cluster0.xqxfy2j.mongodb.net/?retryWrites=true&w=majority`;
 
 export default async function handler(req, res) {
   if (req.method === "POST") {
     const data = req.body;
     const { title, image, address } = data;
 
-    const client = await MongoClient.connect(url);
+    const client = await MongoClient.connect(uri);
+
     const db = client.db();
 
     const meetupCollection = db.collection("meetups");
+
     const result = await meetupCollection.insertOne(data);
 
     console.log(result);

@@ -3,11 +3,12 @@ import { setupListeners } from "@reduxjs/toolkit/query";
 import logger from "redux-logger";
 
 import { pokemonApi } from "./service/pokemon";
+import { meetupApi } from "./service/meetupApi";
 
 import counterSlice from "./slices/counterSlice";
 import modalSlice from "./slices/modalSlice";
 
-const middlewares = [pokemonApi.middleware];
+const middlewares = [pokemonApi.middleware, meetupApi.middleware];
 
 if (process.env.NODE_ENV === "development") {
   middlewares.push(logger);
@@ -15,9 +16,10 @@ if (process.env.NODE_ENV === "development") {
 
 export const store = configureStore({
   reducer: {
-    [pokemonApi.reducerPath]: pokemonApi.reducer,
     counter: counterSlice,
     modal: modalSlice,
+    [pokemonApi.reducerPath]: pokemonApi.reducer,
+    [meetupApi.reducerPath]: meetupApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(middlewares),
