@@ -4,7 +4,13 @@ import { Modal, Button } from "@douyinfe/semi-ui";
 import MeetupList from "@/component/MeetUp/MeetupList";
 import MeetupForm from "@/component/MeetUp/MeetupForm";
 
-import { useAddMeetupMutation } from "@/service/meetupApi";
+import {
+  getRunningQueriesThunk,
+  useAddMeetupMutation,
+  useGetMeetupsQuery,
+} from "@/service/meetupApi";
+import { meetupApi } from "@/service/meetupApi";
+import { wrapper } from "@/store";
 
 const FakeData = [
   {
@@ -21,10 +27,12 @@ const FakeData = [
   },
 ];
 
-export default function Meetup() {
+export default function Meetup({ meetupData }) {
+  console.log(meetupData, "meetupData!!");
   const [openModal, setOpenModal] = useState(false);
-  const [meetups, setMeetups] = useState([]);
   const [addMeetup, { isLoading, error }] = useAddMeetupMutation();
+  // Client side rendering
+  // const { data } = useGetMeetupsQuery();
 
   const handleOpenModal = () => {
     setOpenModal(true);
@@ -36,27 +44,12 @@ export default function Meetup() {
 
   const handleAddMeetup = async (meetupData) => {
     const { data } = await addMeetup(JSON.stringify(meetupData));
-    // const response = await fetch("/api/new-meetup", {
-    //   method: "POST",
-    //   body: JSON.stringify(meetupData),
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    // });
-
-    // const data = await response.json();
-
-    console.log(data, "data!!");
   };
-
-  useEffect(() => {
-    setMeetups(FakeData);
-  }, []);
 
   return (
     <React.Fragment>
       <Button onClick={handleOpenModal}>Add Meetup</Button>
-      <MeetupList meetups={meetups} />
+      <MeetupList meetups={meetupData?.data} />
       <Modal
         title="Add New Meetup"
         visible={openModal}
@@ -73,15 +66,21 @@ export default function Meetup() {
   );
 }
 
+export const getServerSideProps = wrapper.getServerSideProps(
+  (store) => async (context) => {
+    const { dispatch } = store;
+    const data = await dispatch(meetupApi.endpoints.getMeetups.initiate());
+    // Promise.all(dispatch(getRunningQueriesThunk()));
+    console.log(data, "data");
+    return {
+      props: {
+        meetupData: data,
+      },
+    };
+  }
+);
+
 // export async function getStaticProps(context) {
-//   console.log(context, "context");
-
-//   return {
-//     props: {},
-//   };
-// }
-
-// export async function getServerSideProps(context) {
 //   console.log(context, "context");
 
 //   return {
