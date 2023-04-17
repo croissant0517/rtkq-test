@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 import { Modal, Button } from "@douyinfe/semi-ui";
 
 import MeetupList from "@/component/MeetUp/MeetupList";
@@ -28,7 +29,7 @@ const FakeData = [
 ];
 
 export default function Meetup({ meetupData }) {
-  console.log(meetupData, "meetupData!!");
+  const router = useRouter();
   const [openModal, setOpenModal] = useState(false);
   const [addMeetup, { isLoading, error }] = useAddMeetupMutation();
   // Client side rendering
@@ -44,6 +45,11 @@ export default function Meetup({ meetupData }) {
 
   const handleAddMeetup = async (meetupData) => {
     const { data } = await addMeetup(JSON.stringify(meetupData));
+
+    if (data) {
+      setOpenModal(false);
+      router.reload();
+    }
   };
 
   return (
