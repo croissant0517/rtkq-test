@@ -1,4 +1,5 @@
 import Head from "next/head";
+import { useRouter } from "next/router";
 import Image from "next/image";
 import { Inter } from "next/font/google";
 import styles from "@/styles/Home.module.css";
@@ -6,6 +7,7 @@ import styles from "@/styles/Home.module.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
+  const router = useRouter();
   return (
     <>
       <Head>
@@ -38,6 +40,7 @@ export default function Home() {
             </a>
           </div>
         </div>
+        <button onClick={() => router.push("/pokemon")}>GG</button>
 
         <div className={styles.center}>
           <Image
