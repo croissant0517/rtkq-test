@@ -40,7 +40,8 @@ export default function Home() {
             </a>
           </div>
         </div>
-        <button onClick={() => router.push("/pokemon")}>GG</button>
+
+        <button onClick={() => router.push("/pokemon")}>GO pokemon</button>
 
         <div className={styles.center}>
           <Image
